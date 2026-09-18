@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "MAJO Tetris"
+description = "A playable browser Tetris game with a bold MAJO identity, keyboard and touch controls, scoring, levels, and responsive layouts."
+version = "1.0.0"
+id = "artifacts/majo-tetris"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23622
+
+[services.development]
+run = "pnpm --filter @workspace/majo-tetris run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/majo-tetris", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/majo-tetris/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23622"
+BASE_PATH = "/"
